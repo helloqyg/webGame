@@ -1,0 +1,133 @@
+<extend name="Public:base" />
+<block name="css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/lightbox.css">
+</block>
+<block name="content">
+<div class="row">
+<div class="col-sm-12">
+	<div class="panel panel-color panel-info">
+		<div class="panel-heading">
+			发票信息
+		</div>
+		<div class="panel-body">
+			<div class="row">
+					<table class="table table-striped">
+						<tbody>
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">企业名称:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control" name="SITE_NAME" value="<{$invoice['company_name']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">发票类型:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control" name="SITE_NAME" value="<eq name='invoice.type' value='1'>普票<else/>专票</eq>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<!--<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">税&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</span>
+									<div class="col-sm-5 col-xs-8">
+										<a class="example-image-link" href="<{$company_info['scan_part']}>" data-lightbox="example-1">
+											<img class="example-image" src="<{$company_info['scan_part']}>" alt="image-1"  width="232px"/>
+										</a>
+									</div>
+								</div>
+							</td>
+						</tr>-->
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">税&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control" name="SITE_NAME" value="<{$invoice['invoice']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">开票总额:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control" name="SITE_NAME" value="<{$invoice['total']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control" name="SITE_NAME" value="<{$invoice['address']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">开户银行:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control" name="SITE_NAME" value="<{$invoice['blank']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">开户帐号:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control" name="SITE_NAME" value="<{$invoice['blank_num']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>						
+						<notempty name="id">
+						<form role="form" class="form-horizontal" id="form" method="post" action="">
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label"></span>
+									<div class="col-sm-5 col-xs-8">
+										<label class="radio-inline">
+											<input type="radio" name="status" value="1" <eq name="invoice.status" value='1'>checked</eq> /> 开票
+										</label>
+										<label class="radio-inline">
+											<input type="radio" name="status" value="0" <eq name="invoice.status" value='0'>checked</eq>/> 未开票
+										</label>
+									</div>
+								</div>
+							</td>
+						</tr>
+						</notempty>
+					</tbody>
+				</table>
+				<notempty name="id">
+				<div class="form-group text-center">
+					<input type="hidden" name="id" value="<{$id}>"/>
+					<button type="submit" class="btn btn-success btn-single pull-center ajax-post" data-dir='2' target-form="form-horizontal">审核</button>
+				</form>
+				</div>
+				</notempty>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+</block>
+<block name="script">
+<script src="__PUBLIC__/admin/js/lightbox.js"></script>
+</block>

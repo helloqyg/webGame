@@ -1,0 +1,77 @@
+<extend name="Public:base" />
+<block name="css">
+<style>
+.upload-pre-item ul {float:left;width:100%}
+.upload-pre-item ul li {list-style-type:none;float:left;width:120px;}
+</style>
+</block>
+<block name="content">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">添加信息</h3>
+			</div>
+			<div class="panel-body">
+				<form role="form" class="form-horizontal" method="post" action="">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">标题信息</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="title" name="title" value="<{$news.title|default=''}>" placeholder="标题信息">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">缩&nbsp;&nbsp;略&nbsp;&nbsp;图</label>	
+						<div class="col-sm-6">
+							<div id="queue"></div>
+							<input id="file_upload" name="pic" type="file" multiple="true">
+							<div class="upload-pre-item" <empty name="news.pic">style="display:none"</empty>>
+								<ul>
+								</ul>					
+							</div>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group text-center">
+						<button type="submit" class="btn btn-info btn-single pull-center ajax-post"  target-form="form-horizontal">添加</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="script">
+<link rel="stylesheet" href="__PUBLIC__/js/uploadify/uploadify.css">
+<script src="__PUBLIC__/js/uploadify/jquery.uploadify.min.js"></script>
+<script src="__PUBLIC__/admin/js/daterangepicker/daterangepicker.js"></script>
+<script src="__PUBLIC__/admin/js/datepicker/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+$(function(){
+	//图片上传
+	$('#file_upload').uploadify({
+		'height'      : 30,
+		'fileObjName' : 'upfile',
+		'swf'         : "__PUBLIC__/js/uploadify/uploadify.swf",
+		'uploader'    : "<{:U('News/fileupload')}>",
+		"buttonText"  : "上传图片",
+		"onUploadSuccess" : uploadPicturecover,
+	});
+
+	//上传成功之后
+	function uploadPicturecover(file,data){
+		var obj = eval( "(" + data + ")" );
+		if(obj.state == 'SUCCESS'){
+			$(".upload-pre-item").css('display','block');
+			//$("input[name='pic']").val('/upload/'+obj.url);
+			$(".uploadify").height("17px");
+			// $(".upload-pre-item").html('<img src="/upload/' + obj.url + '" width="120px;"/>');
+			var html = '<li><img src="/upload/' + obj.url + '" width="120px;" /></br>';
+				html+= '<input type="hidden" class="text input-medium" name="pic[]" value="/upload/'+obj.url+'"></li>';
+			$(".upload-pre-item>ul").append(html); 
+		}
+	}
+
+});
+</script>
+</block>

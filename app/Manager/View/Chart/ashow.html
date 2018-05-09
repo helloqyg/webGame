@@ -1,0 +1,114 @@
+<extend name="Public:base" />
+<block name="css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/lightbox.css">
+</block>
+<block name="content">
+<div class="row">
+<div class="col-sm-12">
+	<div class="panel panel-color panel-info">
+		<div class="panel-heading">
+			合同申请
+		</div>
+		<div class="panel-body">
+			<div class="row">
+					<table class="table table-striped">
+						<tbody>
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">企业名称:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control"  value="<{$invoice['company_name']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">发送邮箱:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control"  value="<{$invoice['email']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">接&nbsp;&nbsp;收&nbsp;&nbsp;人:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control"  value="<{$invoice['person']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">接收地址:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control"  value="<{$invoice['address']}>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>						
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">发送方式:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control"  value="<eq name='invoice.type' value='1'>邮箱发送<else/>快递发送</eq>" disabled>
+									</div>
+								</div>
+							</td>
+						</tr>	
+						<notempty name="id">
+						<form role="form" class="form-horizontal" id="form" method="post" action="">
+						<eq name='invoice.type' value='2'>
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label">快递单号:</span>
+									<div class="col-sm-5 col-xs-8">
+										<input type="text" class="form-control" name="express" value="<{$invoice.express|default=""}>" >
+										<span class="help-block">EMS快递单号</span>
+									</div>
+								</div>
+							</td>
+						</tr>	
+						</eq>
+						<tr>
+							<td>
+								<div class="form-group">
+									<span class="col-sm-4 col-xs-3 control-label"></span>
+									<div class="col-sm-5 col-xs-8">
+										<label class="radio-inline">
+											<input type="radio" name="status" value="2" <eq name="invoice.status" value='2'>checked</eq> /> 完成
+										</label>
+										<label class="radio-inline">
+											<input type="radio" name="status" value="1" <eq name="invoice.status" value='1'>checked</eq>/> 未完成
+										</label>
+									</div>
+								</div>
+							</td>
+						</tr>
+						</notempty>
+					</tbody>
+				</table>
+				<notempty name="id">
+				<div class="form-group text-center">
+					<input type="hidden" name="id" value="<{$id}>"/>
+					<button type="submit" class="btn btn-success btn-single pull-center ajax-post" data-dir='2' target-form="form-horizontal">审核</button>
+				</form>
+				</div>
+				</notempty>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+</block>
+<block name="script">
+<script src="__PUBLIC__/admin/js/lightbox.js"></script>
+</block>

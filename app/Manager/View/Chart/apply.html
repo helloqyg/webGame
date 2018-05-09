@@ -1,0 +1,87 @@
+<extend name="Public:base" />
+<block name="css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/lightbox.css">
+</block>
+<block name="content">
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">合同申请</h3>		
+				<div class="panel-options">
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover news-list">
+						  <thead>
+							<tr>
+							  <th class="col-md-2">公司名称</th>
+							  <th class="col-md-2">邮    箱</th>
+							  <th class="col-md-2">详    情</th>
+							  <th class="col-md-2 text-center">状  态</th>
+							  <th class="col-md-2 text-center">操  作</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<volist name="apply" id="i">
+							<tr>
+							  <td>
+							 	<a href="<{:U('User/verify',array('cid'=>get_uid_cid($i['uid'])))}>"><{$i.company_name}></a></td>
+							  <td ><{$i.email}></td>
+							  <td ><{$i.detail}></td>
+							  <td class="text-center" style="width: 50px"><eq name="i.status" value="2">完成<else/>未完成</eq></td>
+							  <td class="text-center">
+								<a class="btn btn-info" href="<{:U('chart/ashow',array('id'=>$i['id']))}>" role="button">操作</a>
+							   </td>
+							</tr>
+							</volist>
+						  </tbody>
+						</table>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<ul class="pagination">
+							<{$page}>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="script">
+<script src="__PUBLIC__/admin/js/lightbox.js"></script>
+<script type="text/javascript">
+function myrefresh(){window.location.reload();}
+//删除
+function del(aid){
+	var opts = {
+			"closeButton": true,
+			"debug": false,
+			"positionClass": "toast-top-full-width",
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "2000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		};
+	$.get("<{:U('News/del')}>", {id:aid},function(data){
+		if(data.status == 1){
+			toastr.success(data.info, opts);
+			setTimeout('myrefresh()',2000);
+		}else{
+			toastr.error(data.info, opts);
+		}
+
+	});
+}
+</script>
+</block>

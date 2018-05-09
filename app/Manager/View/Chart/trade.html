@@ -1,0 +1,136 @@
+<extend name="Public:base" />
+<block name="css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/lightbox.css">
+<script type="text/javascript" >
+function myrefresh(){window.location.reload();}
+//删除
+function del(aid){
+	var opts = {
+			"closeButton": true,
+			"debug": false,
+			"positionClass": "toast-top-full-width",
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "2000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		};
+	$.get("<{:U('Chart/trade_del')}>", {id:aid},function(data){
+		if(data.status == 1){
+			toastr.success(data.info, opts);
+			setTimeout('myrefresh()',2000);
+		}else{
+			toastr.error(data.info, opts);
+		}
+
+	});
+}
+</script>
+</block>
+<block name="content">
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">订单管理</h3><span style="font-size:14px; color:red;">小提示：如果为支付宝付款，财务审核则显示对方的支付宝帐号，如果是汇款并且财务已审核成功则显示已审核 </span>		
+				<div class="panel-options">
+				<div class="vertical-top">
+					<!--<button class="btn btn-success btn-icon add-single">
+						<i class="fa-pencil"></i>
+						<span>添加展位</span>
+					</button>-->
+				</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+					
+						<table class="table table-hover news-list">
+						  <thead>
+							<tr>
+							<th class="col-md-1 text-center">序  号</th>
+							  <th class="col-md-1 text-center">展位号</th>
+							  <th class="col-md-2 text-center">购买企业</th>
+							  <th class="col-md-1 text-center">展馆名称</th>
+							  <th class="col-md-1 text-center">展位面积</th>
+							  <th class="col-md-1 text-center">展位价格</th>
+							  <th class="col-md-1 text-center">状   态</th>
+							  <th class="col-md-1 text-center">财务审核</th>
+							   <th class="col-md-2 text-center">操作</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<volist name="list" id="single">
+							<tr>
+							<td class="text-center">
+								<{$single['id']}>
+							</td>
+							  <th scope="row" class="text-center">
+							  <if condition="$single.ad_type eq 1" >
+							 	<{:get_booth($single['bid'])}>
+								<else />
+								<{:get_ad_encode($single['bid'])}>
+								</if>
+							 </th>
+							 <td class="text-center">
+							 <php>$cid = get_uid_cid($single['uid']);</php>
+							 	<a href="<{:U('User/verify',array('cid'=>$cid))}>"><{:get_company($single['uid'])}></a>
+							 </td>
+							  <td class="text-center">
+							  		<{:get_hall_name($single['bid'])}>馆
+							  </td>
+							 <td class="text-center">
+							 <!--<{:get_chart_type($single['hall_type'])}>-->
+							 <{$single['area']}> 平方米
+							 </td>
+							  <td class="text-center"><{$single.price}> 元</td>
+							  <td class="text-center">
+							  	<eq name="single.status" value="1" >待付款</eq>
+							  	<eq name="single.status" value="4" >已付款</eq>
+							  </td>
+							  <td class="text-center">
+							  <eq name="single.type" value="1">
+								<eq name="single.status" value="4" ><{$single.buyer_email}><else/>支付宝未付款</eq>
+							  <else/>
+							  <if condition="get_pay_status($single['bid']) neq 1">未审核    <else /> 已审核</if>
+							  </eq>
+							  
+							  </td>
+							  <td class="text-center">
+								<a class="btn btn-info" href="<{:U('Chart/update_trade',array('aid'=>$single['id']))}>" role="button">修改</a>
+								<a class="btn btn-warning" href="javascript:void(0);" onClick="del(<{$single.id}>)" role="button">删除</a>
+							  </td>
+							</tr>
+							</volist>
+						  </tbody>
+						</table>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<ul class="pagination">
+							<{$page}>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="script">
+<script src="__PUBLIC__/admin/js/lightbox.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".add-single").click(function(){
+		window.location.href="<{:U('Chart/add_booth',array('id'=>I('get.id')))}>";
+	})
+
+})
+</script>
+</block>

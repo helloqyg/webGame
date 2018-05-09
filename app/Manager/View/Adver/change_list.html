@@ -1,0 +1,189 @@
+<extend name="Public:base" />
+<block name="css">
+	<link href="__JS__/umeditor/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" charset="utf-8" src="__JS__/umeditor/umeditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="__JS__/umeditor/umeditor.min.js"></script>
+	<script type="text/javascript" src="__JS__/umeditor/lang/zh-cn/zh-cn.js"></script>
+</block>
+<block name="content">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><if  condition="$Think.get.id neq '' " >修改<else/>添加</if >广告 &nbsp; &nbsp; &nbsp; &nbsp;
+			<button class="	btn btn-inverse go_1">返回上一步 </button></h3>
+			</div>
+			<div class="panel-body">
+				<form role="form" class="form-horizontal" method="post" action="">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">广告名称</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="goods_name" id="keywords" value="<{$data.goods_name|default=''}>" placeholder="">
+							<p class="help-block"> 数字，如1238</p>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">所在位置</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="goods_address" id="keywords" value="<{$data.goods_address|default=''}>" placeholder="">
+							<p class="help-block"> 数字，如1238</p>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="field-5">广告类型</label>
+							<div class="col-sm-6">
+								<select name="cat_id" class="form-control" >
+									<volist name="type" id="v" >
+									<option value="<{$v.tp_id}>"  <if condition="$data.cat_id eq $v.tp_id " >selected</if>  > <{$v.tp_name}></option>
+									</volist>
+								</select>
+							</div>
+						</div>
+					<div class="form-group-separator"></div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="field-5">广告区域</label>
+							<div class="col-sm-6">
+								<select name="ae_id" class="form-control" >
+									<volist name="area" id="v" >
+									<option value="<{$v.ae_id}>"  <if condition="$data.ae_id eq $v.ae_id " >selected</if>  > <{$v.ae_name}></option>
+									</volist>
+								</select>
+							</div>
+						</div>
+					
+					
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">现&nbsp;&nbsp;场&nbsp;&nbsp;图</label>	
+						<div class="col-sm-6">
+							<div id="queue"></div>
+							<input id="file_upload" name="goods_locale_logo" type="file" multiple="true">
+							<div class="upload-pre-item" <empty name="data.goods_locale_logo">style="display:none"</empty>>
+								<img src="<{$data.goods_locale_logo|default=''}>" width="120px;" height="120px;">					
+							</div>
+							<input type="hidden" name="goods_locale_logo" value="<{$data.goods_locale_logo|default=''}>" />
+
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">平&nbsp;&nbsp;面&nbsp;&nbsp;图</label>	
+						<div class="col-sm-6">
+							<div id="queue"></div>
+							<input id="file_upload_1" name="goods_plane_logo" type="file" multiple="true">
+							<div class="upload-pre-item_1" <empty name="data.goods_plane_logo">style="display:none"</empty>>
+								<img src="<{$data.goods_plane_logo|default=''}>" width="120px;" height="120px;">					
+							</div>
+							<input type="hidden" name="goods_plane_logo" value="<{$data.goods_plane_logo|default=''}>" />
+
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-5">是否为特殊类型</label>
+							<div class="col-sm-6">
+							<label class="radio-inline">
+								<input type="radio" name="is_special" value="0" checked="true" /> 正常类型
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="is_special" value="1" /> 特殊类型
+							</label>
+							
+							
+							<p class="help-block" style="color:red"> 注意：发布现场广告切勿选择特殊类型！</p>
+						</div>
+					</div>
+					</div>
+					<!--<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">展位总价</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="payment" id="keywords" value="<{$news.payment|default=''}>" placeholder="展位价格">
+							<p class="help-block">单位是'元'，只能输入数字</p>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>-->
+				
+					
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">广告详情</label>
+						<div class="col-sm-6">
+							<script type="text/plain" name="content" id="content" style="width:678px;height:300px;">
+								<{$data.content|default=''|htmlspecialchars_decode}>
+							</script>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group text-center">
+						<input type="hidden" name="goods_id" value="<{$Think.get.id|default=''}>" />
+						<button type="submit" class="btn btn-info btn-single pull-center ajax-post"  target-form="form-horizontal"><if  condition="$Think.get.id neq '' " >修改<else/>添加</if >广告</h3>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+
+<block name="script">
+<link rel="stylesheet" href="__PUBLIC__/js/uploadify/uploadify.css">
+<script src="__PUBLIC__/js/uploadify/jquery.uploadify.min.js"></script>
+<script src="__PUBLIC__/admin/js/daterangepicker/daterangepicker.js"></script>
+<script src="__PUBLIC__/admin/js/datepicker/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+$(function(){
+	window.UMEDITOR_CONFIG.imageUrl = "<{:U('News/fileupload')}>"
+	window.UMEDITOR_CONFIG.imagePath='/upload/';
+	UM.getEditor('content');
+
+$('.go_1').click(function(){
+		history.go(-1)
+	})
+	//现场图图片上传
+	$('#file_upload').uploadify({
+		'height'      : 30,
+		'fileObjName' : 'upfile',
+		'swf'         : "__PUBLIC__/js/uploadify/uploadify.swf",
+		'uploader'    : "<{:U('News/fileupload')}>",
+		"buttonText"  : "上传图片",
+		"onUploadSuccess" : uploadPicturecover,
+	});
+
+	//上传成功之后
+	function uploadPicturecover(file,data){
+		var obj = eval( "(" + data + ")" );
+		if(obj.state == 'SUCCESS'){
+			$(".upload-pre-item").css('display','block');
+			$("input[name='goods_locale_logo']").val('/upload/'+obj.url);
+			$(".uploadify").height("17px");
+			$(".upload-pre-item").html('<img src="/upload/' + obj.url + '" width="120px;"/>');
+		}
+	}
+
+
+
+		//【平面图图片上传
+	$('#file_upload_1').uploadify({
+		'height'      : 30,
+		'fileObjName' : 'upfile',
+		'swf'         : "__PUBLIC__/js/uploadify/uploadify.swf",
+		'uploader'    : "<{:U('News/fileupload')}>",
+		"buttonText"  : "上传图片",
+		"onUploadSuccess" : uploadPicturecover_1,
+	});
+
+	//上传成功之后
+	function uploadPicturecover_1(file,data){
+		var obj = eval( "(" + data + ")" );
+		if(obj.state == 'SUCCESS'){
+			$(".upload-pre-item").css('display','block');
+			$("input[name='goods_plane_logo']").val('/upload/'+obj.url);
+			$(".uploadify").height("17px");
+			$(".upload-pre-item_1").html('<img src="/upload/' + obj.url + '" width="120px;"/>');
+		}
+	}
+});
+</script>
+</block>

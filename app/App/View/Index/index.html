@@ -1,0 +1,237 @@
+<extend name="Public:base1" />
+<block name="css">
+<link href="__CSS__/lrtk.css" rel="stylesheet" >
+
+</block>
+<block name="main">
+<div class="big_float">
+      
+   <div class="zhan_biaoyu"><img src="__HOME__/images/banar_float.png" usemap="#planetmap" hidefocus="true"></div>
+    </div>
+  <!-- 轮播图 -->
+<div class="banner">
+    <div class="banner_show" id="banner_show">
+    <a href="javascript:void(0)" target="_blank" class="bannger_inbox" style="margin-left: -1000px; z-index: 3; display: block;"><img src="__HOME__/images/banner1.jpg" width="2000" height="370"></a>
+    <a href="javascript:void(0)" target="_blank" class="bannger_inbox" style="margin-left: -2000px; z-index: 1; display: none;"><img src="__HOME__/images/banner3.jpg" width="2000" height="370"></a>
+    <!--  <div class="banner_mag">
+                  <div class="yq_banner_list" id="yq_banner_list">
+                  <a href="javascript:;" rel="0" class="hover">&nbsp;</a>
+                  <a href="javascript:;" rel="1">&nbsp;</a>
+                  <a href="javascript:;" rel="2">&nbsp;</a>
+                  </div>
+      </div>-->
+         
+    </div>
+    
+   <map name="planetmap">
+    <!-- 展位 -->
+    <area href="<{:U('/user/booth/index')}>" shape="rect" coords="28,118,238,162" style="outline:none;">
+    <!-- 广告 -->
+    <area href="<{:U('/user/adver/index')}>" shape="rect" coords="28,173,238,217" style="outline:none;">
+  </map>
+ </div>
+  <!-- 轮播图结束 -->
+
+<!-- 主体部分 -->
+<div class="main">
+  <div class="main_sma">
+    <div class="notice">
+      <div class="new_notice fl">  最新公告<div class="shu"></div><span style="font-size: 14px"><a href="<{:U('user/help/news_detail',array('id'=>$notice['id']))}>" > <{$notice.title}></a></span></div>
+      <div class="more fr"><a href="<{:U('user/help/news')}>"> 更多</a></div>
+    </div>
+
+    <div class="clear"></div>
+    <!-- 推荐展位 -->
+    <div class="exhibition">
+    <div class="ex_title">
+      <img src="__HOME__/images/rec_exhibition.jpg">
+    </div>
+
+      <div class="exhi_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/c.jpg">
+        </div>
+        <div class="detail">
+          <p>展位号：8C13</p>
+          <p>展&nbsp;&nbsp;&nbsp;馆：8.2号馆C区</p>
+          <p>面&nbsp;&nbsp;&nbsp;积：48m²</p>
+        </div>
+        <div class="btn">
+          <a href="<{:U('User/Booth/select',array('id'=>'6','area'=>1,'flag'=>'8C13'))}>">详细了解</a>
+        </div>
+      </div>
+
+      <div class="exhi_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/d.jpg">
+        </div>
+        <div class="detail">
+          <p>展位号：8D12</p>
+          <p>展&nbsp;&nbsp;&nbsp;馆：8.2号馆D区</p>
+          <p>面&nbsp;&nbsp;&nbsp;积：48m²</p>
+        </div>
+        <div class="btn">
+          <a href="<{:U('User/Booth/select',array('id'=>'6','area'=>2,'flag'=>'8D12'))}>">详细了解</a>
+        </div>
+      </div>
+
+      <div class="exhi_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/e.jpg">
+        </div>
+        <div class="detail">
+          <p>展位号：8E19</p>
+          <p>展&nbsp;&nbsp;&nbsp;馆：8.2号馆E区</p>
+          <p>面&nbsp;&nbsp;&nbsp;积：48m²</p>
+        </div>
+        <div class="btn">
+          <a href="<{:U('User/Booth/select',array('id'=>'6','area'=>3,'flag'=>'8E09'))}>">详细了解</a>
+        </div>
+      </div>
+
+      <div class="exhi_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/f.jpg">
+        </div>
+        <div class="detail">
+          <p>展位号：8F06</p>
+          <p>展&nbsp;&nbsp;&nbsp;馆：8.2号馆F区</p>
+          <p>面&nbsp;&nbsp;&nbsp;积：48m²</p>
+        </div>
+        <div class="btn">
+          <a href="<{:U('User/Booth/select',array('id'=>'6','area'=>4,'flag'=>'8F06'))}>">详细了解</a>
+        </div>
+      </div>
+
+       <div class="exhi_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/c-1.jpg">
+        </div>
+        <div class="detail">
+          <p>展位号：8C17</p>
+          <p>展&nbsp;&nbsp;&nbsp;馆：8.2号馆C区</p>
+          <p>面&nbsp;&nbsp;&nbsp;积：48m²</p>
+        </div>
+        <div class="btn">
+          <a href="<{:U('User/Booth/select',array('id'=>'6','area'=>1,'flag'=>'8C17'))}>">详细了解</a>
+        </div>
+      </div>
+
+       <div class="exhi_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/d-1.jpg">
+        </div>
+        <div class="detail">
+          <p>展位号：8D16</p>
+          <p>展&nbsp;&nbsp;&nbsp;馆：8.2号馆D区</p>
+          <p>面&nbsp;&nbsp;&nbsp;积：48m²</p>
+        </div>
+        <div class="btn">
+          <a href="<{:U('User/Booth/select',array('id'=>'6','area'=>2,'flag'=>'8D16'))}>">详细了解</a>
+        </div>
+      </div>
+
+       <div class="exhi_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/e-1.jpg">
+        </div>
+        <div class="detail">
+          <p>展位号：8E06</p>
+          <p>展&nbsp;&nbsp;&nbsp;馆：8.2号馆E区</p>
+          <p>面&nbsp;&nbsp;&nbsp;积：48m²</p>
+        </div>
+        <div class="btn">
+          <a href="<{:U('User/Booth/select',array('id'=>'6','area'=>3,'flag'=>'8E06'))}>">详细了解</a>
+        </div>
+      </div>
+
+       <div class="exhi_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/f-1.jpg">
+        </div>
+        <div class="detail">
+          <p>展位号：8F02</p>
+          <p>展&nbsp;&nbsp;&nbsp;馆：8.2号馆F区</p>
+          <p>面&nbsp;&nbsp;&nbsp;积：48m²</p>
+        </div>
+        <div class="btn">
+          <a href="<{:U('User/Booth/select',array('id'=>'6','area'=>4,'flag'=>'8F02'))}>">详细了解</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 推荐展位结束 -->
+
+    <!-- 广告推荐开始 -->
+<!-- <div class="ad">
+    <div class="ex_title">
+      <img src="__HOME__/images/rec_ad.jpg">
+    </div>
+
+      <div class="ad_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/ad_scene.jpg">
+        </div>
+        <div class="detail_ad">
+          <p>位置：7号出入口右侧</p>
+          <p>数量：2</p>
+          <p>行式: 围栏看板</p>
+          <p>优势: 7号门为会展中心两边主要入口,行人较多</p>
+        </div>
+        <div class="btn">
+          <a href="">详细了解</a>
+        </div>
+      </div>
+
+      <div class="ad_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/ad_scene.jpg">
+        </div>
+        <div class="detail_ad">
+          <p>位置：7号出入口右侧</p>
+          <p>数量：2</p>
+          <p>行式：围栏看板</p>
+          <p>优势：7号门为会展中心两边主要入口,行人较多</p>
+        </div>
+        <div class="btn">
+          <a href="">详细了解</a>
+        </div>
+      </div>
+
+      <div class="ad_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/ad_scene.jpg">
+        </div>
+        <div class="detail_ad">
+          <p>位置：7号出入口右侧</p>
+          <p>数量：2</p>
+          <p>行式：围栏看板</p>
+          <p>优势：7号门为会展中心两边主要入口,行人较多</p>
+        </div>
+        <div class="btn">
+          <a href="">详细了解</a>
+        </div>
+      </div>
+
+      <div class="ad_booth">
+        <div class="exhi_img">
+          <img src="__HOME__/images/ad_scene.jpg">
+        </div>
+        <div class="detail_ad">
+          <p>位置：7号出入口右侧</p>
+          <p>数量：2</p>
+          <p>行式：围栏看板</p>
+          <p>优势：7号门为会展中心两边主要入口,行人较多</p>
+        </div>
+        <div class="btn">
+          <a href="">详细了解</a>
+        </div>
+      </div>
+
+
+    </div> -->
+  </div>
+</div><!--  boody浅灰部分 -->
+</block>
+
+

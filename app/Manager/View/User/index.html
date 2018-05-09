@@ -1,0 +1,99 @@
+<extend name="Public:base" />
+<block name="content">
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><{$header_title}></h3>		
+				<div class="panel-options">
+				<div class="vertical-top">
+				</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-bordered table-striped table-hover">
+							<thead>
+								<tr>
+									<th>用户名</th>
+									<th >公司</th>
+									<th>展馆类型</th>
+									<th>负责人电话</th>
+									<th>负责人邮箱</th>
+									<th>法人电话</th>
+									<th>法人邮箱</th>
+									<th>认证时间</th>
+									<neq name="Think.ACTION_NAME" value="index">
+									<th class="col-md-2 text-center">
+										操作
+									</th>
+									</neq>
+								</tr>
+							</thead>
+							<tbody>
+								<volist name="list" id="m">
+								<tr>
+									<td><{$m.username|default='未填'}></td>
+									<td><a href="<{:U('User/verify',array('cid'=>$m['cid']))}>"><{$m.company_name|default='未填'}></a></td>
+									<td><{:get_chart_type($m['type'])}></td>
+									<td><{$m.f_phone|default='未填'}></td>
+									<td><{$m.f_email|default='未填'}></td>
+									<th><{$m.c_phone|default='未填'}></th>
+									<td><{$m.c_email|default='未填'}></td>
+									<td><{$m.rtime|default='未填'|date='Y-m-d',###}></td>
+									<neq name="Think.ACTION_NAME" value="index">
+									<td>
+										<a class="btn btn-info" href="<{:U('User/verify',array('id'=>$m['cid']))}>" role="button">审核</a>
+										<a class="btn btn-warning" href="javascript:void(0);" onClick="del(<{$m.cid}>)" role="button">删除</a>
+									</td>
+									</neq>
+								</tr>
+								</volist>
+							</tbody>
+						</table>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<ul class="pagination">
+							<{$page}>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="script">
+<script type="text/javascript">
+function myrefresh(){window.location.reload();}
+//删除
+function del(aid){
+	var opts = {
+			"closeButton": true,
+			"debug": false,
+			"positionClass": "toast-top-full-width",
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "2000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		};
+	$.get("<{:U('User/del')}>", {id:aid},function(data){
+		if(data.status == 1){
+			toastr.success(data.info, opts);
+			setTimeout('myrefresh()',2000);
+		}else{
+			toastr.error(data.info, opts);
+		}
+
+	});
+}
+</script>
+</block>

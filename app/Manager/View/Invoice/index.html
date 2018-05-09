@@ -1,0 +1,82 @@
+<extend name="Public:base" />
+<block name="content">
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">发票申请</h3>		
+				<div class="panel-options">
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover news-list">
+						  <thead>
+							<tr>
+							  <th class="col-md-2">公司名称</th>
+							  <th class="col-md-2">发票总价</th>
+							  <th class="col-md-2">已开发票</th>
+							  <th class="col-md-2 text-center">时  间</th>
+							  <th class="col-md-2 text-center">操  作</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<volist name="invoice" id="i">
+							<tr>
+							  <td><{$i.company_name}></td>
+							  <td><{$i.total}>元</td>
+							  <td><eq name="i.status" value="0">否<else/>是</eq></td>
+							  <td class="text-center"><{$i.time|date="Y-m-d",###}></td>
+							  <td class="text-center">
+								<a class="btn btn-info" href="<{:U('invoice/show',array('id'=>$i['id']))}>" role="button">操作</a>
+							   </td>
+							</tr>
+							</volist>
+						  </tbody>
+						</table>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<ul class="pagination">
+							<{$page}>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="script">
+<script type="text/javascript">
+function myrefresh(){window.location.reload();}
+//删除
+function del(aid){
+	var opts = {
+			"closeButton": true,
+			"debug": false,
+			"positionClass": "toast-top-full-width",
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "2000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		};
+	$.get("<{:U('News/del')}>", {id:aid},function(data){
+		if(data.status == 1){
+			toastr.success(data.info, opts);
+			setTimeout('myrefresh()',2000);
+		}else{
+			toastr.error(data.info, opts);
+		}
+
+	});
+}
+</script>
+</block>

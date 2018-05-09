@@ -1,0 +1,123 @@
+<extend name="Public:base" />
+<block name="content">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><notempty name="news.id">修改<else/>添加</notempty>展位</h3>
+			</div>
+			<div class="panel-body">
+				<form role="form" class="form-horizontal" method="post" action="">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">展&nbsp;&nbsp;位&nbsp;&nbsp;号</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="booth_num" id="keywords" value="<{$news.booth_num|default=''}>" placeholder="展位号，如'1238'">
+							<p class="help-block"> 数字，如1238</p>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">所属展馆</label>	
+						<div class="col-sm-6">
+							<select name="hid" class="form-control" >
+								<volist name="hall" id="v">
+									<option value="<{$v.id}>" <eq name="Think.get.id" value="$v['id']">selected</eq> <eq name="hall_hid" value="$v['id']">selected</eq>><{$v.hall_num}>馆</option>
+								</volist>
+							</select>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="field-5">展馆类型</label>
+							<div class="col-sm-6">
+								<select name="hall_type" class="form-control" >
+									<!--<option value="1" <eq name="news.hall_type" value="1">selected</eq>>整机</option>-->
+									<option value="2" <eq name="news.hall_type" value="2">selected</eq>>部件</option>
+									<!--<option value="3" <eq name="news.hall_type" value="3">selected</eq>>其它</option>-->
+								</select>
+							</div>
+						</div>
+					<notempty name="hall_area">
+					<div class="form-group-separator"></div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="field-5">展位区域</label>
+							<div class="col-sm-6">
+								<select name="hall_area" class="form-control" >
+									<volist name="hall_area" id="h">
+									<option value="<{$hall_area[$key]}>" <eq name="news.hall_area" value="$hall_area[$key]">selected</eq>><{$hall_area[$key]}></option>
+									</volist>
+								</select>
+							</div>
+						</div>
+					</notempty>
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">展位面积</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="area" id="keywords" value="<{$news.area|default=''}>" placeholder="展位面积">
+							<p class="help-block">展位面积，填写数字，单位平方米</p>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<!--<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">展位总价</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="payment" id="keywords" value="<{$news.payment|default=''}>" placeholder="展位价格">
+							<p class="help-block">单位是'元'，只能输入数字</p>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>-->
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">展位定金</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="price" id="keywords" value="<{$news.price|default=''}>" placeholder="展位价格">
+							<p class="help-block">单位是'元'，只能输入数字</p>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-5">展馆状态</label>
+							<div class="col-sm-6">
+							<label class="radio-inline">
+								<input type="radio" name="status" value="1" <eq name="news.status" value="1">checked</eq> /> 销售
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="status" value="0" <eq name="news.status" value="0">checked</eq>/>  预留
+							</label>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-5">展位类型</label>
+							<div class="col-sm-6">
+							<label class="radio-inline">
+								<input type="radio" name="special" value="1" <eq name="news.special" value="1">checked</eq> /> 光地
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="special" value="0" <eq name="news.special" value="0">checked</eq>/>  标展
+							</label>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-5">展位审核</label>
+							<div class="col-sm-6">
+							<label class="radio-inline">
+								<input type="radio" name="checks" value="1" <eq name="news.checks" value="1">checked</eq> /> 需要
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="checks" value="0" <eq name="news.checks" value="0">checked</eq>/>  不需要
+							</label>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group text-center">
+						<input type="hidden" name="id" value="<{$id|default=''}>" />
+						<button type="submit" class="btn btn-info btn-single pull-center ajax-post"  target-form="form-horizontal"><notempty name="news.id">修改<else/>添加</notempty>展位</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</block>

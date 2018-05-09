@@ -1,0 +1,96 @@
+<extend name="Public:base" />
+<block name="css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/lightbox.css">
+</block>
+<block name="content">
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">汇款审核</h3>		
+				<div class="panel-options">
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover news-list">
+						  <thead>
+							<tr>
+							  <th class="col-md-2">公司名称</th>
+							  <th class="col-md-1">汇款总额</th>
+							  <th class="col-md-1 text-center">凭  证</th>
+							  <th class="col-md-1 text-center" width="50">付款类型</th>
+							  <th class="col-md-3 text-center">详  情</th>
+							  <th class="col-md-2 text-center">状  态</th>
+							  <th class="col-md-2 text-center">操  作</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<volist name="apply" id="i">
+							<tr>
+							  <td><{$i.company}></td>
+							  <td ><{$i.price}>元</td>
+							  <td class="text-center">
+							  	
+								<a class="example-image-link" href="<{$i.fukuan}>" data-lightbox="example-1">
+								<img class="example-image" src="<{$i.fukuan}>" alt="image-1"  height="20px"/>
+										</a>
+							  </td>
+							  <td class="text-center"><eq name="i.type" value="1">广告<else/>展位</eq></td>
+
+							  <td class="text-center"><eq name="i.type" value="1"><{:get_ad_name($i['pid'])}> <span style="color:red">编号：<{:get_ad_encode($i['pid'])}> </span> <else/><{$i.hall_num}>馆-第<{$i.hall_area}>区域-<{$i.booth_num}>号-<{$i.area}>平米</eq></td>
+							  <td class="text-center"><eq name="i.status" value="1">通过<else/>未审核</eq></td>
+							  <td class="text-center">
+								<a class="btn btn-info" href="<{:U('invoice/ashow',array('id'=>$i['id']))}>" role="button">操作</a>
+							   </td>
+							</tr>
+							</volist>
+						  </tbody>
+						</table>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<ul class="pagination">
+							<{$page}>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="script">
+<script src="__PUBLIC__/admin/js/lightbox.js"></script>
+<script type="text/javascript">
+function myrefresh(){window.location.reload();}
+//删除
+function del(aid){
+	var opts = {
+			"closeButton": true,
+			"debug": false,
+			"positionClass": "toast-top-full-width",
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "2000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		};
+	$.get("<{:U('News/del')}>", {id:aid},function(data){
+		if(data.status == 1){
+			toastr.success(data.info, opts);
+			setTimeout('myrefresh()',2000);
+		}else{
+			toastr.error(data.info, opts);
+		}
+
+	});
+}
+</script>
+</block>

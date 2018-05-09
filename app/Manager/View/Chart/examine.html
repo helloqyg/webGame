@@ -1,0 +1,96 @@
+<extend name="Public:base" />
+<block name="content">
+<script type="text/javascript">
+function myrefresh(){window.location.reload();}
+// 删除信息
+var opts = {
+			"closeButton": true,
+			"debug": false,
+			"positionClass": "toast-top-full-width",
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "2000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		};
+//删除
+function del(aid){
+	
+	$.get("<{:U('Chart/del')}>", {id:aid},function(data){
+		if(data.status == 1){
+			toastr.success(data.info, opts);
+			setTimeout('myrefresh()',2000);
+		}else{
+			toastr.error(data.info, opts);
+		}
+
+	});
+}
+
+function update(aid){
+	$.get("<{:U('Chart/update')}>", {id:aid},function(data){
+		if(data.status == 1){
+			toastr.success(data.info, opts);
+			setTimeout('myrefresh()',2000);
+		}else{
+			toastr.error(data.info, opts);
+		}
+
+	});
+}
+</script>
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">标展审核</h3>		
+				<div class="panel-options">
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover news-list">
+						  <thead>
+							<tr>
+							  <th class="col-md-3 text-center">公司名称</th>
+							  <th class="col-md-2">申请展位号</th>
+							  <th class="col-md-2 text-center">申请时间</th>
+							  <th class="col-md-2 text-center">操  作</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<volist name="list" id="v">
+							<tr>
+							  <td class="col-md-3 text-center"><{:get_company($v['uid'])}></td>
+							  <td><{:get_hall_name($v['bid'])}>号馆【<{:get_booth($v['bid'])}>】</td>
+							  <td class="text-center"><{$v.atime|date="Y-m-d",###}></td>
+							  <td class="text-center">
+								<a class="btn btn-info" onclick="update(<{$v['id']}>)" role="button">通过</a>
+								<a class="btn btn-warning" onclick="del(<{$v['id']}>)" role="button">删除</a>
+							   </td>
+							</tr>
+							</volist>
+						  </tbody>
+						</table>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<ul class="pagination">
+							<{$page}>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="script">
+
+</block>

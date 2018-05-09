@@ -1,0 +1,110 @@
+<extend name="Public:base" />
+<block name="content">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><notempty name="news.id">修改<else/>添加</notempty>展馆</h3>
+			</div>
+			<div class="panel-body">
+				<form role="form" class="form-horizontal" method="post" action="">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">展&nbsp;&nbsp;位&nbsp;&nbsp;号</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="hall_num" id="keywords" value="<{$news.hall_num|default=''}>" placeholder="展位号，如'5.1'">
+							<p class="help-block"> 数字，如5.1</p>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">展&nbsp;&nbsp;位&nbsp;&nbsp;图</label>	
+						<div class="col-sm-6">
+							<div id="queue"></div>
+							<input id="file_upload" name="pic" type="file" multiple="true">
+							<div class="upload-pre-item" <empty name="news.pic">style="display:none"</empty>>
+								<img src="<{$news.pic|default=''}>" width="120px;" height="120px;">					
+							</div>
+							<input type="hidden" name="pic" value="<{$news.pic|default=''}>" />
+
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="field-5">展馆类型</label>
+							<div class="col-sm-6">
+								<select name="hall_type" class="form-control" >
+									<option value="1" <eq name="news.hall_type" value="1">selected</eq>>整机</option>
+									<option value="2" <eq name="news.hall_type" value="2">selected</eq>>部件</option>
+									<option value="3" <eq name="news.hall_type" value="3">selected</eq>>其它</option>
+								</select>
+							</div>
+						</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-5">展馆状态</label>
+							<div class="col-sm-6">
+							<label class="radio-inline">
+								<input type="radio" name="status" value="1" <eq name="news.status" value="1">checked</eq> /> 启用
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="status" value="0" <eq name="news.status" value="0">checked</eq>/> 不启用
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">展馆分区</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="area" id="keywords" value="<{$news.area|default=''}>" placeholder="展馆分区，如A,B,C">
+							<p class="help-block"> 展馆分区请以英文逗号分割</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="field-1">展馆区域坐标</label>	
+						<div class="col-sm-6">
+							<input type="text" class="form-control" name="position" id="keywords" value="<{$news.position|default=''}>" placeholder="坐标，如0，0，1，2">
+							<p class="help-block"> 顶点坐标，以英文逗号分割</p>
+						</div>
+					</div>
+					<div class="form-group-separator"></div>
+					<div class="form-group text-center">
+						<input type="hidden" name="id" value="<{$id|default=''}>" />
+						<button type="submit" class="btn btn-info btn-single pull-center ajax-post"  target-form="form-horizontal"><notempty name="news.id">修改<else/>添加</notempty>展馆</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="script">
+<link rel="stylesheet" href="__PUBLIC__/js/uploadify/uploadify.css">
+<script src="__PUBLIC__/js/uploadify/jquery.uploadify.min.js"></script>
+<script src="__PUBLIC__/admin/js/daterangepicker/daterangepicker.js"></script>
+<script src="__PUBLIC__/admin/js/datepicker/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+$(function(){
+
+	//图片上传
+	$('#file_upload').uploadify({
+		'height'      : 30,
+		'fileObjName' : 'upfile',
+		'swf'         : "__PUBLIC__/js/uploadify/uploadify.swf",
+		'uploader'    : "<{:U('Chart/fileupload')}>",
+		"buttonText"  : "上传图片",
+		"onUploadSuccess" : uploadPicturecover,
+	});
+
+	//上传成功之后
+	function uploadPicturecover(file,data){
+		var obj = eval( "(" + data + ")" );
+		if(obj.state == 'SUCCESS'){
+			$(".upload-pre-item").css('display','block');
+			$("input[name='pic']").val('/upload/'+obj.url);
+			$(".uploadify").height("17px");
+			$(".upload-pre-item").html('<img src="/upload/' + obj.url + '" width="120px;"/>');
+		}
+	}
+
+});
+</script>
+</block>

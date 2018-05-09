@@ -1,0 +1,172 @@
+<extend name="Public:base" />
+<block name="css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/lightbox.css">
+<script type="text/javascript">
+function myrefresh(){window.location.reload();}
+	//删除操作
+	function del(aid){
+		var opts = {
+				"closeButton": true,
+				"debug": false,
+				"positionClass": "toast-top-full-width",
+				"onclick": null,
+				"showDuration": "300",
+				"hideDuration": "1000",
+				"timeOut": "2000",
+				"extendedTimeOut": "1000",
+				"showEasing": "swing",
+				"hideEasing": "linear",
+				"showMethod": "fadeIn",
+				"hideMethod": "fadeOut"
+			};
+		$.get("<{:U('Adver/del')}>", {id:aid},function(data){
+			if(data.status == 1){
+				toastr.success(data.info, opts);
+				setTimeout('myrefresh()',2000);
+			}else{
+				toastr.error(data.info, opts);
+			}
+
+		});
+	}
+</script>
+</block>
+<block name="content">
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading"><h3 class="panel-title" style="width:350px;"><p style="display:block; float:left; padding-right:20px;">广告管理</p><form method="get" action="<{:U('adver')}>">
+							<input type="text" name="key" class="form-control search-field" style="float:left; width:200px;" />
+							<button type="submit" class="btn btn-link" style="float:left;" >
+								<i class="linecons-search"></i>
+							</button>
+						</form></h3>	
+				<div class="panel-options">
+				<div class="vertical-top">
+				<button class="btn btn-success btn-icon add-rbac">
+						<i class="fa-pencil"></i>
+						<span>购买权限</span>
+					</button>
+					<button class="btn btn-success btn-icon add-area">
+						<i class="fa-pencil"></i>
+						<span>区域管理</span>
+					</button>
+					<button class="btn btn-success btn-icon add-type">
+						<i class="fa-pencil"></i>
+						<span>类型管理</span>
+					</button>
+					<button class="btn btn-success btn-icon add-info">
+						<i class="fa-pencil"></i>
+						<span>发布广告</span>
+					</button>
+				</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+					
+						<table class="table table-hover news-list">
+						  <thead>
+							<tr>
+							  <th class="col-md-3 text-center">广告名称</th>
+							  <th class="col-md-3 text-center">广告位置</th>
+							  <th class="col-md-2 text-center">所属区域</th>
+							  <th class="col-md-1 text-center">广告形式</th>
+							  <th class="col-md-1 text-center">剩余/总计</th>
+							  <th class="col-md-3 text-center">操  作</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<volist name="data" id="v">
+							<tr>
+							  <th scope="row" class="text-center">
+								<{$v.goods_name}>
+							  </th>
+							  <td scope="row" class="text-center">
+								<{$v.goods_address}>
+							  </td>
+							 <td scope="row" class="text-center">
+								<{:get_ad_area($v['ae_id'])}>
+							  </td>
+							  <td class="text-center"><{:get_ad_cat($v['cat_id'])}></td>
+							  <td class="text-center"><{:get_ad_bot_count($v['goods_id'])}>/<{:get_ad_count($v['goods_id'])}></td>
+							  <td class="text-center">
+								<a class="btn btn-warning" href="<{:U('Adver/change_list',array('id'=>$v['goods_id']))}>" role="button">修改</a>
+								<a class="btn btn-info" href="<{:U('Adver/addresslist',array('id'=>$v['goods_id']))}>" role="button">详情</a>
+								<a class="btn btn-danger btn8" href="javascript:void(0);"  attr="<{$v.goods_id}>" role="button">删除</a>
+							   </td>
+							</tr>
+							</volist>
+						  </tbody>
+						</table>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<ul class="pagination">
+							<!--<{$page}>-->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="script">
+<script src="__PUBLIC__/admin/js/lightbox.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".add-area").click(function(){
+		window.location.href="<{:U('Adver/area')}>";
+	})
+	$(".add-type").click(function(){
+		window.location.href="<{:U('Adver/type')}>";
+	})
+	$(".add-info").click(function(){
+		window.location.href="<{:U('Adver/change_list')}>";
+	})
+	$(".add-rbac").click(function(){
+		window.location.href="<{:U('Adver/rbac')}>";
+	})
+})
+				//删除操作
+	$('.btn8').click(function(){
+		var msg = "您真的确定要删除吗？"; 
+ 		if (confirm(msg)==true){
+			var opts = {
+					"closeButton": true,
+					"debug": false,
+					"positionClass": "toast-top-full-width",
+					"onclick": null,
+					"showDuration": "300",
+					"hideDuration": "1000",
+					"timeOut": "2000",
+					"extendedTimeOut": "1000",
+					"showEasing": "swing",
+					"hideEasing": "linear",
+					"showMethod": "fadeIn",
+					"hideMethod": "fadeOut"
+				};
+			var aid = $(this).attr('attr')
+			$.ajax({
+				type: "POST",
+			    url: "<{:U('adver/del')}>",
+		    	data: {'id':aid,flag:'goods'},
+				success: function(msg){
+					if(msg == 0){
+						alert('当前产品下还有未删除的编号，不可删除')
+					}else{
+							history.go(0) 
+					}
+				 }
+
+			})
+		}
+
+
+	})
+
+</script>
+</block>
